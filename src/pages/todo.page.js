@@ -1,4 +1,13 @@
-import { Alert, Card, Center, LoadingOverlay, Pagination, Select, Table } from "@mantine/core";
+import {
+  Alert,
+  Card,
+  Center,
+  LoadingOverlay,
+  Pagination,
+  Select,
+  Table,
+  Text,
+} from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getTodo } from "../utils/api";
@@ -26,6 +35,9 @@ function TodoPage() {
 
   return (
     <div>
+      <Text size={"xl"} variant="gradient">
+        Todos
+      </Text>
       <Select
         label="Per page"
         placeholder="10"

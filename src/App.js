@@ -8,7 +8,7 @@ function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <QueryClientProvider client={queryClient}>
-        <Container size={"lg"}>
+        <Container size={"xl"}>
           <TodoPage />
         </Container>
       </QueryClientProvider>
