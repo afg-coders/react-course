@@ -11,6 +11,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getTodo } from "../utils/api";
+import { Link } from "react-router-dom";
 
 function TodoPage() {
   const [page, setPage] = useState(1);
@@ -35,6 +36,7 @@ function TodoPage() {
 
   return (
     <div>
+      <Link to={"/todo"}>Todo </Link>
       <Text size={"xl"} variant="gradient">
         Todos
       </Text>
