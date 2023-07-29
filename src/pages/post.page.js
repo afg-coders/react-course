@@ -12,9 +12,8 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getTodo } from "../utils/api";
 import { Link } from "react-router-dom";
-import { IconCheck, IconX } from "@tabler/icons-react";
 
-function TodoPage() {
+function PostsPage() {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
@@ -37,9 +36,8 @@ function TodoPage() {
 
   return (
     <div>
-      <Link to={"/todo"}>Todo </Link>
       <Text size={"xl"} variant="gradient">
-        Todos
+        Posts
       </Text>
       <Select
         label="Per page"
@@ -78,4 +76,4 @@ function TodoPage() {
   );
 }
 
-export default TodoPage;
+export default PostsPage;
