@@ -11,6 +11,8 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { getTodo } from "../utils/api";
+import { Link } from "react-router-dom";
+import { IconCheck, IconX } from "@tabler/icons-react";
 
 function TodoPage() {
   const [page, setPage] = useState(1);
@@ -35,6 +37,7 @@ function TodoPage() {
 
   return (
     <div>
+      <Link to={"/todo"}>Todo </Link>
       <Text size={"xl"} variant="gradient">
         Todos
       </Text>
@@ -50,7 +53,7 @@ function TodoPage() {
           <tr>
             <th>ID</th>
             <th>Title</th>
-            <th>Completed</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +62,9 @@ function TodoPage() {
               <tr key={value.id}>
                 <td>{value.id}</td>
                 <td>{value.title}</td>
-                <td>{value.completed ? "Completed" : "In Complete"}</td>
+                <td>
+                  <Link to={`/post/${value.id}`}>More</Link>
+                </td>
               </tr>
             );
           })}
@@ -67,7 +72,7 @@ function TodoPage() {
       </Table>
       {/* 999/  10 = 100 */}
       <Center mt={"lg"}>
-        <Pagination value={page} onChange={setPage} total={200 / limit} />
+        <Pagination value={page} onChange={setPage} total={100 / limit} />
       </Center>
     </div>
   );
