@@ -1,22 +1,22 @@
-import React from "react";
-import { Container, MantineProvider } from "@mantine/core";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from 'react';
+import { Container, MantineProvider } from '@mantine/core';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import PostDetail from "./pages/posts/detail.page";
-import PostsPage from "./pages/post.page";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PostDetail from './pages/posts/detail.page';
+import PostsPage from './pages/post.page';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <PostsPage />,
   },
   {
-    path: "todo",
+    path: 'todo',
     element: <div>Todo Page</div>,
   },
   {
-    path: "post/:id",
+    path: 'post/:id',
     element: <PostDetail />,
   },
 ]);
@@ -25,7 +25,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
-        <Container size={"xl"}>
+        <Container size={'xl'}>
           <RouterProvider router={router} />
         </Container>
       </MantineProvider>
