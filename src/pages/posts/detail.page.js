@@ -1,15 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getOneTodo } from "../../utils/api";
-import { Button, LoadingOverlay } from "@mantine/core";
+import { useQuery } from '@tanstack/react-query';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getOneTodo } from '../../utils/api';
+import { Button, LoadingOverlay } from '@mantine/core';
 
 function PostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["fetch-post", id],
+    queryKey: ['fetch-post', id],
     queryFn: () => getOneTodo(id),
   });
 
