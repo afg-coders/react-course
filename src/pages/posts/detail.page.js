@@ -25,7 +25,7 @@ function PostDetail() {
       <Button
         variant="outline"
         onClick={() => {
-          navigate("/");
+          navigate(-1);
         }}
       >
         Back
