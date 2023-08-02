@@ -9,12 +9,13 @@ import {
   Table,
   Text,
 } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
+
 import React from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { IconMoon2, IconSun } from '@tabler/icons-react';
-import { useThemeStore } from '../../store/theme.store';
 import { getTodo } from '../../utils/api';
+import { useQuery } from '@tanstack/react-query';
+import { useThemeStore } from '../../store/theme.store';
+import { IconMoon2, IconSun } from '@tabler/icons-react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 function PostsPage() {
   let [searchParams, setSearchParams] = useSearchParams();
@@ -88,7 +89,6 @@ function PostsPage() {
           })}
         </tbody>
       </Table>
-      {/* 999/  10 = 100 */}
       <Center mt={'lg'}>
         <Pagination
           onChange={(value) => updateQueryParams({ page: value })}
