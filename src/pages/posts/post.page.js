@@ -2,6 +2,7 @@ import {
   Alert,
   Card,
   Center,
+  Group,
   LoadingOverlay,
   Pagination,
   Select,
@@ -10,12 +11,15 @@ import {
 } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
-import { getTodo } from '../utils/api';
 import { Link, useSearchParams } from 'react-router-dom';
+import { IconMoon2, IconSun } from '@tabler/icons-react';
+import { useThemeStore } from '../../store/theme.store';
+import { getTodo } from '../../utils/api';
 
 function PostsPage() {
   let [searchParams, setSearchParams] = useSearchParams();
 
+  const { theme, setTheme } = useThemeStore();
   const { data, isLoading, isError } = useQuery({
     queryKey: [
       'fetch-todo',
@@ -45,9 +49,16 @@ function PostsPage() {
 
   return (
     <div>
-      <Text size={'xl'} variant="gradient">
-        Posts
-      </Text>
+      <Group position="apart" mb={'lg'} mt={'md'}>
+        <Text size={'xl'} variant="gradient">
+          Posts
+        </Text>
+        {theme === 'light' ? (
+          <IconMoon2 onClick={() => setTheme('dark')} />
+        ) : (
+          <IconSun onClick={() => setTheme('light')} />
+        )}
+      </Group>
       <Select
         label="Per page"
         placeholder="10"
