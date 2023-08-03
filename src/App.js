@@ -14,7 +14,7 @@ function App() {
       <MantineProvider
         withGlobalStyles
         withNormalizeCSS
-        theme={{ colorScheme: theme }}
+        theme={{ colorScheme: theme, loader: 'dots' }}
       >
         <BrowserRouter>
           <Container size={'xl'}>

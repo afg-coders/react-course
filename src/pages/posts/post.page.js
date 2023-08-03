@@ -1,7 +1,9 @@
 import {
+  ActionIcon,
   Alert,
   Card,
   Center,
+  Flex,
   Group,
   LoadingOverlay,
   Pagination,
@@ -14,11 +16,13 @@ import React from 'react';
 import { getTodo } from '../../utils/api';
 import { useQuery } from '@tanstack/react-query';
 import { useThemeStore } from '../../store/theme.store';
-import { IconMoon2, IconSun } from '@tabler/icons-react';
+import { IconLogout2, IconMoon2, IconSun } from '@tabler/icons-react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { useAuthStore } from '../../store/auth.store';
 
 function PostsPage() {
   let [searchParams, setSearchParams] = useSearchParams();
+  const { logout } = useAuthStore();
 
   const { theme, setTheme } = useThemeStore();
   const { data, isLoading, isError } = useQuery({
@@ -54,11 +58,16 @@ function PostsPage() {
         <Text size={'xl'} variant="gradient">
           Posts
         </Text>
-        {theme === 'light' ? (
-          <IconMoon2 onClick={() => setTheme('dark')} />
-        ) : (
-          <IconSun onClick={() => setTheme('light')} />
-        )}
+        <Flex>
+          {theme === 'light' ? (
+            <IconMoon2 onClick={() => setTheme('dark')} />
+          ) : (
+            <IconSun onClick={() => setTheme('light')} />
+          )}
+          <ActionIcon ml={20} onClick={logout}>
+            <IconLogout2 />
+          </ActionIcon>
+        </Flex>
       </Group>
       <Select
         label="Per page"
