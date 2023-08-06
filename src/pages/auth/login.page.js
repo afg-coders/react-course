@@ -11,14 +11,14 @@ import {
   Title,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/auth.store';
+import { useLoginUser } from '../../queries/auth.query';
 
 function LoginPage() {
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState('');
   const { login } = useAuthStore();
+  const [error, setError] = useState();
+
   const form = useForm({
     initialValues: {
       email: '',
@@ -30,19 +30,16 @@ function LoginPage() {
     },
   });
 
+  const { mutate, isLoading } = useLoginUser();
   const onSubmit = async (values) => {
-    try {
-      setLoading(true);
-      const result = await axios
-        .post('https://reqres.in/api/login', values)
-        .then((response) => response.data);
-      setError('');
-      login({ isLoggedIn: true, token: result?.token });
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      setError(error?.response?.data?.error);
-    }
+    mutate(values, {
+      onSuccess: (values) => {
+        login({ isLoggedIn: true, token: values.token });
+      },
+      onError: (error) => {
+        setError(error?.response?.data?.error);
+      },
+    });
   };
   return (
     <Container size={420} my={80}>
@@ -79,7 +76,7 @@ function LoginPage() {
           <Group position="apart" mt="lg">
             <Checkbox label="Remember me" />
           </Group>
-          <Button loading={loading} type="submit" fullWidth mt="xl">
+          <Button loading={isLoading} type="submit" fullWidth mt="xl">
             Sign in
           </Button>
         </form>

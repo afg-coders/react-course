@@ -1,18 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getOneTodo } from '../../utils/api';
-import { Button, LoadingOverlay } from '@mantine/core';
+import { Button, Container, LoadingOverlay } from '@mantine/core';
+
+import { useGetUser } from '../../queries/users.query';
 
 function PostDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['fetch-post', id],
-    queryFn: () => getOneTodo(id),
-  });
-
+  const { data, isLoading, isError } = useGetUser(id);
   if (isLoading) {
     return <LoadingOverlay visible />;
   }
@@ -20,8 +16,9 @@ function PostDetail() {
   if (isError) {
     return <h1>Error Occurred!</h1>;
   }
+
   return (
-    <div>
+    <Container size={'xl'}>
       <Button
         variant="outline"
         onClick={() => {
@@ -30,9 +27,10 @@ function PostDetail() {
       >
         Back
       </Button>
-      <h1>{data?.title}</h1>
-      <p>{data?.body}</p>
-    </div>
+      <h1>{data?.data?.email}</h1>
+      <h1>{data?.data?.first_name}</h1>
+      <h1>{data?.data?.last_name}</h1>
+    </Container>
   );
 }
 
