@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 
 export const useThemeStore = create(
   persist(
@@ -9,7 +9,6 @@ export const useThemeStore = create(
     }),
     {
       name: 'theme-store',
-      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

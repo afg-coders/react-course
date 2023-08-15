@@ -34,7 +34,11 @@ function LoginPage() {
   const onSubmit = async (values) => {
     mutate(values, {
       onSuccess: (values) => {
-        login({ isLoggedIn: true, token: values.token });
+        login({
+          isLoggedIn: true,
+          token: values.accessToken,
+          user: values.user,
+        });
       },
       onError: (error) => {
         setError(error?.response?.data?.error);

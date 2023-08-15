@@ -1,25 +1,27 @@
-import axios from 'axios';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { deleteRequest, getRequest, postRequest } from '../utils/http';
 
 export const getUsers = async (page, limit) => {
-  return await axios
-    .get(`https://reqres.in/api/users?page=${page}&per_page=${limit}`)
-    .then((response) => response.data);
+  return getRequest(`user`, { page, per_page: limit });
 };
 
 export const getUser = async (id) => {
-  return await axios
-    .get(`https://reqres.in/api/users/${id}`)
-    .then((response) => response.data);
+  return getRequest(`user/${id}`);
 };
 
 export const createUser = async (name, job) => {
-  return await axios
-    .post(`https://reqres.in/api/users`, {
-      name,
-      job,
-    })
-    .then((response) => response.data);
+  return postRequest('user', {
+    name,
+    job,
+  });
+};
+
+export const deleteUser = async (ids) => {
+  await deleteRequest(`user`, {
+    params: {
+      ids,
+    },
+  });
 };
 
 export const useGetUsers = (page, limit) => {
@@ -40,6 +42,16 @@ export const useCreateUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (params) => createUser(params?.name, params?.job),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: 'fetch-users' });
+    },
+  });
+};
+
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (params) => deleteUser(params?.ids),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: 'fetch-users' });
     },

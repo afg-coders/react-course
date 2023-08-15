@@ -1,13 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import { postRequest } from '../utils/http';
 
 export const authenticateUser = async (email, password) => {
-  return await axios
-    .post(`https://reqres.in/api/login`, {
-      email,
-      password,
-    })
-    .then((response) => response.data);
+  return postRequest('auth/signin', {
+    email,
+    password,
+  });
 };
 
 export const useLoginUser = () => {

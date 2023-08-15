@@ -4,7 +4,7 @@ import { Button, Container, LoadingOverlay } from '@mantine/core';
 
 import { useGetUser } from '../../queries/users.query';
 
-function PostDetail() {
+function UserDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -34,4 +34,4 @@ function PostDetail() {
   );
 }
 
-export default PostDetail;
+export default UserDetail;
