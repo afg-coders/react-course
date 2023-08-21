@@ -13,28 +13,24 @@ import {
   Select,
   Table,
   Text,
-  TextInput,
   createStyles,
 } from '@mantine/core';
-
 import React, { useState } from 'react';
-import { useThemeStore } from '../../store/theme.store';
 import {
   IconLogout2,
   IconMoon2,
   IconSun,
   IconTrash,
 } from '@tabler/icons-react';
-import { Link, useSearchParams } from 'react-router-dom';
-import { useAuthStore } from '../../store/auth.store';
-import { useDisclosure } from '@mantine/hooks';
 import { Modal } from '@mantine/core';
-import {
-  useCreateUser,
-  useDeleteUser,
-  useGetUsers,
-} from '../../queries/users.query';
-import { useForm } from '@mantine/form';
+import { useDisclosure } from '@mantine/hooks';
+import { Link, useSearchParams } from 'react-router-dom';
+
+import { useAuthStore } from '../../store/auth.store';
+import { useThemeStore } from '../../store/theme.store';
+import CreateUserModal from './components/create-user.modal';
+import { useDeleteUser, useGetUsers } from '../../queries/users.query';
+
 function UsersPage() {
   let [searchParams, setSearchParams] = useSearchParams();
   const { logout } = useAuthStore();
@@ -44,13 +40,6 @@ function UsersPage() {
   const [deleteOpened, { open: deleteOpen, close: deleteClose }] =
     useDisclosure(false);
 
-  const { mutate, isLoading: createLoading } = useCreateUser();
-  const form = useForm({
-    initialValues: {
-      name: '',
-      job: '',
-    },
-  });
   const { mutate: deleteMutate, isLoading: deleteLoading } = useDeleteUser();
   const [selection, setSelection] = useState([]);
   const toggleRow = (id) =>
@@ -75,15 +64,6 @@ function UsersPage() {
   const updateQueryParams = (newParams) => {
     const mergedParams = { ...Object.fromEntries(searchParams), ...newParams };
     setSearchParams(mergedParams);
-  };
-
-  const onCreate = (values) => {
-    mutate(values, {
-      onSuccess: () => {
-        form.reset();
-        close();
-      },
-    });
   };
 
   const onDelete = async (id) => {
@@ -120,7 +100,6 @@ function UsersPage() {
       </Card>
     );
   }
-  console.log(searchParams.get('limit'));
 
   return (
     <Container size={'xl'}>
@@ -160,20 +139,8 @@ function UsersPage() {
           <Button onClick={open}>Insert</Button>
         </Flex>
       </Group>
-      <Modal centered opened={opened} onClose={close} title="Create User">
-        <form onSubmit={form.onSubmit((value) => onCreate(value))}>
-          <Group mt="md">
-            <TextInput {...form.getInputProps('name')} label="Name" required />
-            <TextInput {...form.getInputProps('job')} label="Job" required />
-          </Group>
 
-          <Group mt="xl">
-            <Button loading={createLoading} type="submit" variant="outline">
-              Submit
-            </Button>
-          </Group>
-        </form>
-      </Modal>
+      <CreateUserModal opened={opened} close={close} />
       <Modal opened={deleteOpened} onClose={deleteClose} title="Delete User">
         <Center>
           <Group mt="xl">

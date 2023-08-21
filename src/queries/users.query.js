@@ -9,11 +9,8 @@ export const getUser = async (id) => {
   return getRequest(`user/${id}`);
 };
 
-export const createUser = async (name, job) => {
-  return postRequest('user', {
-    name,
-    job,
-  });
+export const createUser = async (params) => {
+  return postRequest('user', params);
 };
 
 export const deleteUser = async (ids) => {
@@ -41,7 +38,7 @@ export const useGetUser = (id) => {
 export const useCreateUser = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (params) => createUser(params?.name, params?.job),
+    mutationFn: (params) => createUser(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: 'fetch-users' });
     },
